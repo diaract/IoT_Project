@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Know The Air - Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Chart.js CDN (grafik için) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="top">
+    <h1>Know The Air You Breathe In</h1>
+    <div class="sub">
+      <span>Device: <b id="deviceId"></b></span>
+      <span>Backend: <b id="apiBase"></b></span>
+      <span>Last Update: <b id="lastUpdate">-</b></span>
+    </div>
+  </header>
+
+  <main class="grid">
+    <section class="card">
+      <h2>Status</h2>
+      <div id="statusBadge" class="badge ok">OK</div>
+      <div class="kv">
+        <div>Score</div><div id="score">-</div>
+        <div>TVOC (ppb)</div><div id="tvoc">-</div>
+        <div>eCO₂ (ppm)</div><div id="eco2">-</div>
+      </div>
+      <p id="hint" class="hint">Son 60 sn baseline'a göre yüzde artışla alarm üretilir.</p>
+    </section>
+
+    <section class="card">
+      <h2>Realtime Chart (History)</h2>
+      <canvas id="chart" height="140"></canvas>
+      <div class="row">
+        <button id="refreshBtn">Refresh Now</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Raw JSON (debug)</h2>
+      <pre id="raw">-</pre>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

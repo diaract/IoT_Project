@@ -1,0 +1,17 @@
+body { font-family: system-ui, Arial; margin: 0; background: #f6f6f6; }
+.top { padding: 16px 18px; background: white; border-bottom: 1px solid #ddd; }
+.sub { display:flex; gap:16px; flex-wrap:wrap; color:#444; font-size: 14px; }
+.grid { display:grid; grid-template-columns: 1fr 2fr; gap:14px; padding:14px; }
+.card { background:white; border:1px solid #ddd; border-radius:12px; padding:14px; }
+.kv { display:grid; grid-template-columns: 140px 1fr; gap:8px 10px; margin-top:10px; }
+.badge { display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; }
+.badge.ok { background:#e8f7ee; border:1px solid #b6e2c6; }
+.badge.warn { background:#fff4df; border:1px solid #ffd18a; }
+.badge.high { background:#ffe2e2; border:1px solid #ff9c9c; }
+.hint { color:#666; font-size:13px; }
+.row { margin-top:10px; display:flex; gap:8px; }
+button { padding:8px 12px; border-radius:10px; border:1px solid #ccc; background:white; cursor:pointer; }
+pre { background:#111; color:#0f0; padding:10px; border-radius:10px; overflow:auto; max-height: 240px; }
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
