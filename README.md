@@ -116,7 +116,3 @@ firmware/   → ESP32 / ESP8266 sensor and gateway code
 backend/    → FastAPI backend + SQLite database
 frontend/   → Web dashboard (HTML / CSS / JS)
 docs/       → Architecture diagrams, API docs, demo notes
-
----
-
-
