@@ -88,16 +88,6 @@ This setup provides a clear and intuitive demonstration suitable for
 
 ---
 
-## 📂 Project Structure
-
-```text
-firmware/   → ESP32 / ESP8266 sensor and gateway code
-backend/    → FastAPI backend + SQLite database
-frontend/   → Web dashboard (HTML / CSS / JS)
-docs/       → Architecture diagrams, API docs, demo notes
-
----
-
 ## ⚙️ Technologies Used
 - ESP32 / ESP8266
 - SGP30, BME680, DHT11
@@ -116,3 +106,17 @@ docs/       → Architecture diagrams, API docs, demo notes
 - Multi-node large-scale deployment
 - Edge-based alerts and local decision-making
 - Integration of additional gas sensors (CO, real CO₂)
+
+---
+
+## 📂 Project Structure
+
+```text
+firmware/   → ESP32 / ESP8266 sensor and gateway code
+backend/    → FastAPI backend + SQLite database
+frontend/   → Web dashboard (HTML / CSS / JS)
+docs/       → Architecture diagrams, API docs, demo notes
+
+---
+
+
