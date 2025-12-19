@@ -6,6 +6,23 @@ from .database import Base
 def utc_now():
     return datetime.now(timezone.utc)
 
+class Device(Base):
+    """Sensor cihazları - konum ve meta bilgiler"""
+    __tablename__ = "devices"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    device_id: Mapped[str] = mapped_column(String(64), unique=True, index=True)
+    name: Mapped[str] = mapped_column(String(256))
+    
+    # Konum bilgileri (harita için)
+    lat: Mapped[float] = mapped_column(Float)
+    lon: Mapped[float] = mapped_column(Float)
+    city: Mapped[str] = mapped_column(String(128), index=True)
+    district: Mapped[str] = mapped_column(String(128), index=True)
+    
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+
+
 class Measurement(Base):
     __tablename__ = "measurements"
 

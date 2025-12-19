@@ -1,48 +1,160 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Know The Air - Dashboard</title>
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Chart.js CDN (grafik için) -->
+  <!-- Leaflet.js CDN (for map) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <!-- Leaflet.heat for heat map -->
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  
+  <!-- Chart.js CDN (for charts) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header class="top">
-    <h1>Know The Air You Breathe In</h1>
+    <h1>🌍 Know The Air You Breathe In</h1>
     <div class="sub">
-      <span>Device: <b id="deviceId"></b></span>
       <span>Backend: <b id="apiBase"></b></span>
       <span>Last Update: <b id="lastUpdate">-</b></span>
     </div>
   </header>
 
-  <main class="grid">
-    <section class="card">
-      <h2>Status</h2>
-      <div id="statusBadge" class="badge ok">OK</div>
-      <div class="kv">
-        <div>Score</div><div id="score">-</div>
-        <div>TVOC (ppb)</div><div id="tvoc">-</div>
-        <div>eCO₂ (ppm)</div><div id="eco2">-</div>
-      </div>
-      <p id="hint" class="hint">Son 60 sn baseline'a göre yüzde artışla alarm üretilir.</p>
-    </section>
+  <main class="container">
+    <!-- Left Panel: Map and Filters -->
+    <aside class="sidebar">
+      <section class="card">
+        <h2>📍 Location Selection</h2>
+        
+        <div class="form-group">
+          <label for="ilSelect">Select City:</label>
+          <select id="ilSelect" class="select-box">
+            <option value="">All Turkey</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="ilceSelect">Select District:</label>
+          <select id="ilceSelect" class="select-box" disabled>
+            <option value="">Select city first</option>
+          </select>
+        </div>
 
-    <section class="card">
-      <h2>Realtime Chart (History)</h2>
-      <canvas id="chart" height="140"></canvas>
-      <div class="row">
-        <button id="refreshBtn">Refresh Now</button>
-      </div>
-    </section>
+        <button id="filterBtn" class="btn-primary">Update Map</button>
+      </section>
 
-    <section class="card">
-      <h2>Raw JSON (debug)</h2>
-      <pre id="raw">-</pre>
-    </section>
+      <section class="card">
+        <h2>📊 Selected Location Details</h2>
+        
+        <div id="noSelection" class="info-message">
+          Click on a map point or filter by city/district to see details.
+        </div>
+
+        <div id="detailPanel" class="detail-panel" style="display:none;">
+          <div class="location-header">
+            <h3 id="locationName">-</h3>
+            <div id="qualityBadge" class="quality-badge good">GOOD</div>
+          </div>
+
+          <div class="metrics">
+            <div class="metric-item">
+              <span class="metric-label">Air Quality Score</span>
+              <span class="metric-value" id="detailScore">-</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">TVOC (ppb)</span>
+              <span class="metric-value" id="detailTvoc">-</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">eCO₂ (ppm)</span>
+              <span class="metric-value" id="detailEco2">-</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Temperature</span>
+              <span class="metric-value" id="detailTemp">-</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Humidity</span>
+              <span class="metric-value" id="detailHumidity">-</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-label">Pressure</span>
+              <span class="metric-value" id="detailPressure">-</span>
+            </div>
+          </div>
+
+          <div class="timestamp">
+            <small>Last Measurement: <span id="detailTimestamp">-</span></small>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>🎨 Color Legend</h2>
+        <div class="legend">
+          <div class="legend-item">
+            <span class="legend-color" style="background: #4CAF50;"></span>
+            <span>Good (0-220 ppb)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background: #FF9800;"></span>
+            <span>Moderate (220-660 ppb)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background: #F44336;"></span>
+            <span>Poor (660+ ppb)</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color" style="background: #9E9E9E;"></span>
+            <span>No Data</span>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Right Panel: Map and Chart -->
+    <div class="main-content">
+      <section class="card map-card">
+        <div class="map-header">
+          <h2>🗺️ Turkey Air Quality Map</h2>
+          <div class="map-controls">
+            <label class="control-item">
+              <input type="checkbox" id="showCircles" checked>
+              <span>Color Zones</span>
+            </label>
+            <label class="control-item">
+              <input type="checkbox" id="showHeatmap">
+              <span>Heat Map</span>
+            </label>
+            <label class="control-item">
+              <input type="checkbox" id="showMarkers" checked>
+              <span>Markers</span>
+            </label>
+          </div>
+        </div>
+        <div id="map" class="map-container"></div>
+      </section>
+
+      <section class="card">
+        <h2>📈 Historical Data (Last 2 Hours)</h2>
+        <canvas id="chart" height="100"></canvas>
+        <div class="chart-controls">
+          <button id="refreshBtn" class="btn-secondary">🔄 Refresh Chart</button>
+        </div>
+      </section>
+
+      <section class="card debug-card">
+        <details>
+          <summary><h2 style="display:inline;">🔧 Debug (Raw JSON)</h2></summary>
+          <pre id="raw">-</pre>
+        </details>
+      </section>
+    </div>
   </main>
 
   <script type="module" src="app.js"></script>
