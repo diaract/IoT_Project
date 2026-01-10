@@ -11,7 +11,7 @@
 
 // ==================== CONFIG ====================
 #ifndef NODE_ID
-#define NODE_ID "node-001"
+#define NODE_ID "node-8"
 #endif
 
 #ifndef SAMPLE_PERIOD_MS
@@ -291,6 +291,7 @@ static void applyLoRaParams() {
 }
 
 bool initLoRa() {
+
   spiLoRa.begin(LORA_SCK, LORA_MISO, LORA_MOSI, -1);
 
   Serial.printf("[LoRa] Pins SCK=%d MISO=%d MOSI=%d CS=%d RST=%d DIO0=%d\n",
@@ -364,9 +365,9 @@ String buildPayloadJsonShort(float tempC, float humRH, float pressureHpa,
   doc["st"] = status;
   doc["sm"] = sampleMs;
 
-  String out;
-  serializeJson(doc, out);
-  return out;
+  String json;
+  serializeJson(doc, json);
+  return json;
 }
 
 // ---------- Adaptive sampling state ----------
