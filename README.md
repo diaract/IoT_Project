@@ -14,7 +14,7 @@ data processing**, and a **web-based visualization dashboard**.
 
 The system is designed as a layered and scalable architecture:
 
-### 🟢 Sensor Nodes (ESP32 / ESP8266)
+### 🟢 Sensor Nodes (ESP32 / ESP32 Wroom)
 Each sensor node collects environmental and air quality data:
 
 - **SGP30**
