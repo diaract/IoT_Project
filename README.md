@@ -1,6 +1,6 @@
-# 🌬️ Know The Air You Breathe In
+# 🌬️ Know The Air You Breeze In
 
-**Know The Air You Breathe In** is a low-cost, modular, and distributed air quality monitoring system
+**Know The Air You Breeze In** is a low-cost, modular, and distributed air quality monitoring system
 designed to detect and visualize air pollution events in **industrial zones, educational spaces,
 and indoor environments**.
 
@@ -14,7 +14,7 @@ data processing**, and a **web-based visualization dashboard**.
 
 The system is designed as a layered and scalable architecture:
 
-### 🟢 Sensor Nodes (ESP32 / ESP32 Wroom)
+### 🟢 Sensor Nodes (ESP32 / ESP Wroom32)
 Each sensor node collects environmental and air quality data:
 
 - **SGP30**
@@ -24,10 +24,6 @@ Each sensor node collects environmental and air quality data:
   - Temperature
   - Humidity
   - Pressure
-- **DHT11**
-  - Temperature
-  - Relative Humidity  
-  *(used as a supporting sensor to provide environmental context and redundancy)*
 - **LoRa RA-02 (SX1278)**
   - Long-range, low-power wireless data transmission
 
@@ -78,8 +74,8 @@ The backend acts as the **core intelligence layer** of the system:
 A **transparent air tunnel / box** is used to demonstrate the system:
 
 1. Clean air baseline is established
-2. Smoke (match or cigarette) is introduced into the enclosure
-3. TVOC and eCO₂ values increase sharply
+2. Cologne was sprayed in the enclosed area
+3. TVOC and eCO₂ values increase sharply, also temperature and humidity values increase
 4. Backend detects a significant relative change
 5. Dashboard displays **“Air Pollution: HIGH!”** in real time
 
@@ -89,8 +85,8 @@ This setup provides a clear and intuitive demonstration suitable for
 ---
 
 ## ⚙️ Technologies Used
-- ESP32 / ESP8266
-- SGP30, BME680, DHT11
+- ESP32 / ESP-Wroom32
+- SGP30, BME680
 - LoRa RA-02 (SX1278)
 - FastAPI (Python)
 - SQLite
@@ -112,7 +108,7 @@ This setup provides a clear and intuitive demonstration suitable for
 ## 📂 Project Structure
 
 ```text
-firmware/   → ESP32 / ESP8266 sensor and gateway code
+firmware/   → ESP32 / ESP-WROOM32 sensor and gateway code
 backend/    → FastAPI backend + SQLite database
 frontend/   → Web dashboard (HTML / CSS / JS)
 docs/       → Architecture diagrams, API docs, demo notes
